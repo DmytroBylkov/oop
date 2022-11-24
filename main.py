@@ -40,4 +40,5 @@ if __name__ == '__main__':
     basket.add_product(orange)
     print(basket.totalCostOfProducts)
 
+
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
