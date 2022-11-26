@@ -2,7 +2,25 @@
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+"""
+Challenge:
+
+#. Implement ``Product`` class
+#. Each ``Product`` instance should implement properties:
+    * ``name`` - a product's name, like apple, cheese etc.
+    * ``price`` - a price for a single unit
+#. ``Product`` instance should have a behavior of calculating total
+   price for a specified quantity of goods
+#. Implement ``ShoppingCart`` class
+#. ``ShoppingCart`` instance should combine products instances and
+    corresponding purchased quantities.
+#. ``ShoppingCart`` instance should implement a method to calculate
+   the total price of entire cart.
+
+"""
 class Product:
+
+
     def __init__(self, name: str, price: int, amount: int):
         self.name = name
         self.price = price
@@ -12,7 +30,7 @@ class Product:
         return self.amount * self.price
 
 
-class SmartBasket:
+class ShoppingCart:
     product_in_basket = {}
 
     def add_product(self,obj):
@@ -34,7 +52,7 @@ if __name__ == '__main__':
 
     orange = Product('orange', 15, 2)
 
-    basket = SmartBasket()
+    basket = ShoppingCart()
     basket.add_product(apple)
     basket.add_product(pear)
     basket.add_product(orange)
