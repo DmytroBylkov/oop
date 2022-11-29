@@ -17,6 +17,7 @@ Challenge:
    the total price of entire cart.
 """
 
+
 class Product:
     """class Product imlementation
     * ``name`` - a product's name, like apple, cheese etc.
@@ -26,9 +27,9 @@ class Product:
         self.name = name
         self.price = price
 
-
-    def calculating_total_price_for_product(self, quantity_of_goods):
-        return quantity_of_goods * self.price
+    def get_total(self, quantity):
+        """calculating total price for product"""
+        return round(quantity * self.price, 2)
 
 
 class ShoppingCart:
@@ -40,31 +41,26 @@ class ShoppingCart:
     """
     products_in_cart = []
 
-
-    def add_product(self, obj, amount):
-        self.products_in_cart.append((obj.name,obj.price, amount))
-
+    def add_product(self, obj, quantity):
+        self.products_in_cart.append((obj, quantity))
 
     def total_price(self):
         sum = 0
         for product in self.products_in_cart:
-            sum = sum + product[1] * product[2]
+            sum = sum + product[0].get_total(product[1])
         return sum
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    apple = Product('apple', 10)
-    print(apple.calculating_total_price_for_product(5))
+    apple = Product('apple', 10.43)
+    print(apple.get_total(5))
     pear = Product('pear', 15)
     orange = Product('orange', 15)
     cart = ShoppingCart()
-    cart.add_product(apple, 2)
+    cart.add_product(apple, 4.03)
     print(cart.products_in_cart)
-    cart.add_product(pear, 1)
-    cart.add_product(orange, 4)
+    cart.add_product(pear, 3)
+    cart.add_product(orange, 2)
     print(cart.total_price())
-
-
-
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
