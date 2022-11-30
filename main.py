@@ -46,8 +46,8 @@ class ShoppingCart:
 
     def total_price(self):
         sum = 0
-        for product in self.products_in_cart:
-            sum = sum + product[0].get_total(product[1])
+        for product, quantity in self.products_in_cart:
+            sum = sum + product.get_total(quantity)
         return sum
 
 
