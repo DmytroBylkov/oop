@@ -29,10 +29,19 @@ class Product:
 
     def get_total(self, quantity: float):
         """calculating total price for product"""
+
         return round(quantity * self.price, 2)
 
     def __eq__(self, other):
+        """compares two products for identity"""
+
         return self.name == other.name and self.price == other.price
+
+    def __float__(self):
+        return self.price
+    
+    def __str__(self):
+        return self.name
 
 
 class ShoppingCart:
@@ -58,6 +67,9 @@ class ShoppingCart:
             sum = sum + product.get_total(quantity)
         return sum
 
+    def __float__(self):
+        return self.total_price()
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -71,4 +83,7 @@ if __name__ == '__main__':
     print(cart.__len__())
     apple2 = Product('apple', 10.59)
     print(apple.__eq__(apple2))
+    print(apple.__float__(), apple.__str__())
+    print(cart.__float__())
+
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
