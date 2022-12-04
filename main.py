@@ -24,6 +24,7 @@ class Product:
     * ``price`` - a price for a single unit
     """
     def __init__(self, name: str, price: float):
+
         self.name = name
         self.price = price
 
@@ -38,9 +39,10 @@ class Product:
         return self.name == other.name and self.price == other.price
 
     def __float__(self):
+
         return self.price
     
-    def __str__(self):
+    def __repr__(self) -> str:
         return self.name
 
 
@@ -58,8 +60,8 @@ class ShoppingCart:
     def __len__(self):
         return len(self.products_in_cart)
 
-    def add_product(self, obj, quantity):
-        self.products_in_cart.append((obj, quantity))
+    def add_product(self, obj, quantity=1):
+            self.products_in_cart.append((obj, quantity))
 
     def total_price(self):
         sum = 0
@@ -70,20 +72,34 @@ class ShoppingCart:
     def __float__(self):
         return self.total_price()
 
+    def __str__(self):
+        return self.products_in_cart
+
+    def __add__(self, other):
+        self.products_in_cart = self.products_in_cart + other.products_in_cart
+        return self.products_in_cart
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    apple = Product('apple', 10.59)
-    juice = Product('juice', 36.55)
+    apple = Product('apple', 10)
+    juice = Product('juice', 30)
     cart = ShoppingCart()
-    cart.add_product(apple, 0.35)
-    cart.add_product(juice, 4)
-    cart.add_product(apple, 0.35)
+    cart.add_product(apple, 1)
+    cart.add_product(juice, 1)
+    cart.add_product(apple, 1)
     print(cart.total_price())
     print(cart.__len__())
-    apple2 = Product('apple', 10.59)
+    apple2 = Product('apple', 0.5)
     print(apple.__eq__(apple2))
     print(apple.__float__(), apple.__str__())
     print(cart.__float__())
+    cart2 = ShoppingCart()
+    cart2.add_product(apple2, 2)
+    print(cart.__float__())
+    print(cart.__str__())
+    cart2.__add__(cart)
+    print(cart2.__str__())
+    print(cart2.total_price())
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
