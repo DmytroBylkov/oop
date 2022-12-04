@@ -23,13 +23,16 @@ class Product:
     * ``name`` - a product's name, like apple, cheese etc.
     * ``price`` - a price for a single unit
     """
-    def __init__(self, name: str, price: int):
+    def __init__(self, name: str, price: float):
         self.name = name
         self.price = price
 
-    def get_total(self, quantity):
+    def get_total(self, quantity: float):
         """calculating total price for product"""
         return round(quantity * self.price, 2)
+
+    def __eq__(self, other):
+        return self.name == other.name and self.price == other.price
 
 
 class ShoppingCart:
@@ -39,7 +42,12 @@ class ShoppingCart:
     ``ShoppingCart`` instance should implement a method to calculate
    the total price of entire cart.
     """
-    products_in_cart = []
+    def __init__(self):
+        products_in_cart = []
+        self.products_in_cart = products_in_cart
+    
+    def __len__(self):
+        return len(self.products_in_cart)
 
     def add_product(self, obj, quantity):
         self.products_in_cart.append((obj, quantity))
@@ -53,14 +61,14 @@ class ShoppingCart:
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    apple = Product('apple', 10.43)
-    print(apple.get_total(5))
-    pear = Product('pear', 15)
-    orange = Product('orange', 15)
+    apple = Product('apple', 10.59)
+    juice = Product('juice', 36.55)
     cart = ShoppingCart()
-    cart.add_product(apple, 4.03)
-    print(cart.products_in_cart)
-    cart.add_product(pear, 3)
-    cart.add_product(orange, 2)
+    cart.add_product(apple, 0.35)
+    cart.add_product(juice, 4)
+    cart.add_product(apple, 0.35)
     print(cart.total_price())
+    print(cart.__len__())
+    apple2 = Product('apple', 10.59)
+    print(apple.__eq__(apple2))
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
