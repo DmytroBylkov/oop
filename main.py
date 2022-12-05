@@ -80,7 +80,7 @@ class ShoppingCart:
         return self.total_price()
 
     def __str__(self):
-        return "".join(f"{product.__repr__()}: {quantity}, " for product, quantity in self.products)
+        return ", ".join(f"{product.__repr__()}: {quantity}" for product, quantity in self.products)
 
     def __add__(self, other):
         if self.__eq__(other):
