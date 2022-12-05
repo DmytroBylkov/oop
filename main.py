@@ -35,7 +35,8 @@ class Product:
 
     def __eq__(self, other):
         """compares two products for identity"""
-
+        if not isinstance(other, Product):
+            return False
         return self.name == other.name and self.price == other.price
 
     def __float__(self):
@@ -68,7 +69,13 @@ class ShoppingCart:
         for product, quantity in self.products:
             sum = sum + product.get_total(quantity)
         return sum
-
+   
+    def __eq__(self, other: object) -> bool:
+        """compares two products for identity"""
+        if not isinstance(other, ShoppingCart):
+            return False
+        return True
+   
     def __float__(self):
         return self.total_price()
 
@@ -76,8 +83,12 @@ class ShoppingCart:
         return "".join(f"{product.__repr__()}: {quantity}, " for product, quantity in self.products)
 
     def __add__(self, other):
-        self.products = self.products + other.products
-        return self.products
+        if self.__eq__(other):
+            self.products = self.products + other.products
+            return self.products
+        else:
+            return print("You can add only cart to cart")         
+        
 
 
 # Press the green button in the gutter to run the script.
@@ -101,5 +112,6 @@ if __name__ == '__main__':
     cart2.__add__(cart)
     print(cart2.__str__())
     print(cart2.total_price())
+    cart2.__add__(apple)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
