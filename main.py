@@ -74,7 +74,7 @@ class ShoppingCart:
         """compares two products for identity"""
         if not isinstance(other, ShoppingCart):
             return False
-        return True
+        return self.__str__() == other.__str__()
    
     def __float__(self):
         return self.total_price()
