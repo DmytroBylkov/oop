@@ -43,7 +43,7 @@ class Product:
         return self.price
     
     def __repr__(self) -> str:
-        return self.name
+        return str(self.name)
 
 
 class ShoppingCart:
@@ -54,18 +54,18 @@ class ShoppingCart:
    the total price of entire cart.
     """
     def __init__(self):
-        products_in_cart = []
-        self.products_in_cart = products_in_cart
+        products = []
+        self.products = products
     
     def __len__(self):
-        return len(self.products_in_cart)
+        return len(self.products)
 
     def add_product(self, obj, quantity=1):
-            self.products_in_cart.append((obj, quantity))
+            self.products.append((obj, quantity))
 
     def total_price(self):
         sum = 0
-        for product, quantity in self.products_in_cart:
+        for product, quantity in self.products:
             sum = sum + product.get_total(quantity)
         return sum
 
@@ -73,11 +73,11 @@ class ShoppingCart:
         return self.total_price()
 
     def __str__(self):
-        return self.products_in_cart
+        return "".join(f"{product.__repr__()}: {quantity}, " for product, quantity in self.products)
 
     def __add__(self, other):
-        self.products_in_cart = self.products_in_cart + other.products_in_cart
-        return self.products_in_cart
+        self.products = self.products + other.products
+        return self.products
 
 
 # Press the green button in the gutter to run the script.
