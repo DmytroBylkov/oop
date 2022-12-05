@@ -87,7 +87,8 @@ class ShoppingCart:
             self.products = self.products + other.products
             return self.products
         else:
-            return print("You can add only cart to cart")         
+            print("You can add only cart to cart")
+            return self.products         
         
 
 
