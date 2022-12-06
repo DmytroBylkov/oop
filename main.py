@@ -70,10 +70,10 @@ class ShoppingCart:
         return 'ShoppingCart'   
    
     def __add__(self, other, quantity=1):
-        if other.__repr__() == 'Product':
+        if isinstance(other, Product):
             self.products.append((other, quantity))
             return self.products
-        elif other.__repr__() == 'ShoppingCart':
+        elif isinstance(other, ShoppingCart):
             self.products = self.products + other.products
             return self.products
         else:
