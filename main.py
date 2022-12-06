@@ -47,7 +47,10 @@ class Product:
         return 'Product'
       
     def __str__(self) -> str:
-        return f'{self.name}'        
+        return f'{self.name}'  
+      
+    def __hash__(self):
+        return hash(str(self))      
 
 
 class ShoppingCart:
@@ -85,9 +88,9 @@ class ShoppingCart:
    
     def __eq__(self, other: object) -> bool:
         """compares two products for identity"""
-        if not isinstance(other, ShoppingCart):
-            return False
-        return self.__str__() == other.__str__()
+        if set(self.products) == set(other.products):
+            return True
+        return False
    
     def __float__(self):
         return self.total_price()
