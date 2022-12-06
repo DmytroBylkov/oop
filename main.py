@@ -44,7 +44,10 @@ class Product:
         return self.price
     
     def __repr__(self) -> str:
-        return str(self.name)
+        return 'Product'
+      
+    def __str__(self) -> str:
+        return f'{self.name}'        
 
 
 class ShoppingCart:
@@ -55,15 +58,25 @@ class ShoppingCart:
    the total price of entire cart.
     """
     def __init__(self):
-        products = []
-        self.products = products
+        self.products = []
     
     def __len__(self):
         return len(self.products)
-
-    def add_product(self, obj, quantity=1):
-            self.products.append((obj, quantity))
-
+   
+    def __repr__(self) -> str:
+        return 'ShoppingCart'   
+   
+    def __add__(self, other, quantity=1):
+        if other.__repr__() == 'Product':
+            self.products.append((other, quantity))
+            return self.products
+        elif other.__repr__() == 'ShoppingCart':
+            self.products = self.products + other.products
+            return self.products
+        else:
+            print("You can add only cart to cart, or product to cart")
+            return self.products
+   
     def total_price(self):
         sum = 0
         for product, quantity in self.products:
@@ -82,14 +95,7 @@ class ShoppingCart:
     def __str__(self):
         return ", ".join(f"{product.__repr__()}: {quantity}" for product, quantity in self.products)
 
-    def __add__(self, other: ShoppingCart):
-        if self.__eq__(other):
-            self.products = self.products + other.products
-            return self.products
-        else:
-            print("You can add only cart to cart")
-            return self.products         
-        
+           
 
 
 # Press the green button in the gutter to run the script.
@@ -100,19 +106,16 @@ if __name__ == '__main__':
     cart.add_product(apple, 1)
     cart.add_product(juice, 1)
     cart.add_product(apple, 1)
-    print(cart.total_price())
-    print(cart.__len__())
     apple2 = Product('apple', 0.5)
-    print(apple.__eq__(apple2))
-    print(apple.__float__(), apple.__str__())
-    print(cart.__float__())
     cart2 = ShoppingCart()
     cart2.add_product(apple2, 2)
-    print(cart.__float__())
+    print(apple.__repr__())
     print(cart.__str__())
-    cart2.__add__(cart)
     print(cart2.__str__())
-    print(cart2.total_price())
-    cart2.__add__(apple)
+    cart.__add__(cart2)
+    print(cart.__str__())
+    cart.__add__(juice, 3)
+    print(cart.__str__())
+    print(cart.total_price())
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
