@@ -105,7 +105,7 @@ class ShoppingCart:
 
     def total_price(self):
         sum = 0
-        for product, quantity in self.products:
+        for product, quantity in zip(self.products, self.quantities):
             sum = sum + product.get_total(quantity)
         return round(sum, 2)     
 
