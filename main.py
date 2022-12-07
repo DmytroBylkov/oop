@@ -28,11 +28,6 @@ class Product:
         self.name = name
         self.price = price
 
-    def get_total(self, quantity: float):
-        """calculating total price for product"""
-
-        return round(quantity * self.price, 2)
-
     def __eq__(self, other):
         """compares two products for identity"""
         if not isinstance(other, Product):
@@ -47,11 +42,15 @@ class Product:
         return 'Product'
       
     def __str__(self) -> str:
-        return f'{self.name}'  
+        return self.name 
       
     def __hash__(self):
-        return hash(str(self))      
+        return hash(str(self))    
 
+    def get_total(self, quantity: float):
+        """calculating total price for product"""
+
+        return round(quantity * self.price, 2)
 
 class ShoppingCart:
     """class ShoppingCart implementation
@@ -62,29 +61,13 @@ class ShoppingCart:
     """
     def __init__(self):
         self.products = []
+        self.quantities = []
     
     def __len__(self):
         return len(self.products)
    
     def __repr__(self) -> str:
         return 'ShoppingCart'   
-   
-    def __add__(self, other, quantity=1):
-        if isinstance(other, Product):
-            self.products.append((other, quantity))
-            return self.products
-        elif isinstance(other, ShoppingCart):
-            self.products = self.products + other.products
-            return self.products
-        else:
-            print("You can add only cart to cart, or product to cart")
-            return self.products
-   
-    def total_price(self):
-        sum = 0
-        for product, quantity in self.products:
-            sum = sum + product.get_total(quantity)
-        return sum
    
     def __eq__(self, other: object) -> bool:
         """compares two products for identity"""
@@ -96,9 +79,35 @@ class ShoppingCart:
         return self.total_price()
 
     def __str__(self):
-        return ", ".join(f"{product.__repr__()}: {quantity}" for product, quantity in self.products)
+        return ", ".join(f"{product}" for product in self.products)
 
-           
+    def __add__(self, other, quantity=1):
+        new_cart = ShoppingCart()
+        new_cart.products = self.products.copy()
+        new_cart.quantities = self.quantities.copy()
+
+        if isinstance(other, Product):
+            new_cart.add_product(other, quantity=1)
+            return new_cart
+        if isinstance(other, ShoppingCart):
+            for product, quantity in zip(other.products, other.quantities):
+                new_cart.add_product(product, quantity)
+            return new_cart
+        raise TypeError()
+
+    def add_product(self, product: Product, quantity):
+            if product in self.products:
+                idx = self.products.index(product)
+                self.quantities[idx] += quantity
+            else:
+                self.products.append(product)
+                self.quantities.append(quantity)
+
+    def total_price(self):
+        sum = 0
+        for product, quantity in self.products:
+            sum = sum + product.get_total(quantity)
+        return round(sum, 2)     
 
 
 # Press the green button in the gutter to run the script.
@@ -115,7 +124,7 @@ if __name__ == '__main__':
     print(apple.__repr__())
     print(cart.__str__())
     print(cart2.__str__())
-    cart.__add__(cart2)
+    #cart.__add__(cart2)
     print(cart.__str__())
     cart.__add__(juice, 3)
     print(cart.__str__())
